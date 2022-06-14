@@ -1,0 +1,53 @@
+{% extends 'layout.html' %} {% block scripts %}
+<script src="{{ url_for('static', filename='js/cardEditor.js') }}"></script>
+<script src="{{ url_for('static', filename='js/expander.js') }}"></script>
+<script src="{{ url_for('static', filename='js/filePicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/doubleSlider.js') }}"></script>
+{% endblock scripts %} {% block body %}
+<div class="flex-wrapper">
+  <div id="top-box" class="centering-wrapper">
+    <h1>GodGame Video Card Generator</h1>
+    <div class="input-wrapper">
+      <label for="video">Select a video file:</label>
+      <input
+        type="file"
+        id="video-input"
+        name="video"
+        accept="image/gif, video/*"
+        required
+      />
+      <input type="hidden" id="video-meta" name="video-meta"/>
+    </div>
+    <hr />
+    <div class="input-wrapper">
+      <label for="image">Select a card image:</label>
+      <input type="file" id="image-input" name="image" accept="image/*" required />
+      <input type="hidden" id="image-meta" name="image-meta"/>
+    </div>
+    <div id="button-row" class="row">
+      <button class="top-box-button" type="button" id="card-to-front">Bring image to front</button>
+      <button class="top-box-button" type="button" id="card-to-back">Send image to back</button>
+      <div id="slider-wrapper" class="slider-wrap" role="group" aria-labelledby="multi-lbl">
+        <div id="multi-lbl">Video trim:</div>
+        <div id="slider-track-outer">
+          <div id="slider-track-inner"></div>
+        </div>
+        <label class="sr-only" for="slider-start" step="any">Start:</label>
+        <input id="slider-start" type="range" min="0" value="0" max="10" />
+        <label class="sr-only" for="slider-end" step="any">End:</label>
+        <input id="slider-end" type="range" min="0" value="10" max="10" />
+      </div>
+      
+      <div class="top-box-button" id="pause-button">
+        <span class="material-symbols-rounded">pause</span>
+      </div>
+      <div class="top-box-button" id="expander"></div>
+      <button class="top-box-button" type="button" id="generate-button">Generate!</button>
+    </div>
+  </div>
+  <canvas id="canvas"></canvas>
+  <img id="background-loader" class="no-display" src="{{ url_for('static', filename='assets/geometry.png') }}"></img>
+  <video id="video-loader" class="hidden loader" width="160" height="90" muted autoplay loop></video>
+  <image id="image-loader" class="hidden loader" width="160" height="90"></image>
+</div>
+{% endblock body %}
